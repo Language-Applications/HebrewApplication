@@ -1,0 +1,51 @@
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header, footer {
+    background-color: #E2856E;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header select, header button {
+    font-size: 16px;
+    padding: 5px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#english-section {
+    background-color: #C4C6E7;
+    width: 80%;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+#hebrew-section {
+    background-color: #FAF0CA;
+    width: 80%;
+    padding: 20px;
+}
+
+.section-label {
+    font-weight: bold;
+    color: gray;
+}
+
+footer button {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #E2856E;
+    border: none;
+    cursor: pointer;
+}

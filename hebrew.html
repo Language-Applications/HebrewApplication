@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Learning App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <select id="category-select">
+            <option value="sentences">Sentences</option>
+            <option value="verbs">Verbs</option>
+            <option value="nouns">Nouns</option>
+            <option value="adjectives">Adjectives</option>
+        </select>
+        <button id="switch-direction">English → Hebrew</button>
+    </header>
+
+    <main>
+        <div id="english-section">
+            <p class="section-label">English</p>
+            <p id="english-text"></p>
+        </div>
+        <div id="hebrew-section">
+            <p class="section-label">Hebrew</p>
+            <div id="hebrew-content"></div>
+        </div>
+    </main>
+
+    <footer>
+        <button id="show-continue">Show</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+[
+    {
+        "english": "book [male]",
+        "hebrew_spoken_singular": "ספר",
+        "hebrew_letters_singular": "sefer",
+        "hebrew_spoken_plural": "ספרים",
+        "hebrew_letters_plural": "sfarim"
+    },
+    {
+        "english": "house [male]",
+        "hebrew_spoken_singular": "בית",
+        "hebrew_letters_singular": "bayit",
+        "hebrew_spoken_plural": "בתים",
+        "hebrew_letters_plural": "batim"
+    },
+    {
+        "english": "dog [male]",
+        "hebrew_spoken_singular": "כלב",
+        "hebrew_letters_singular": "kelev",
+        "hebrew_spoken_plural": "כלבים",
+        "hebrew_letters_plural": "klavim"
+    },
+    {
+        "english": "cat [male]",
+        "hebrew_spoken_singular": "חתול",
+        "hebrew_letters_singular": "chatul",
+        "hebrew_spoken_plural": "חתולים",
+        "hebrew_letters_plural": "chatulim"
+    },
+    {
+        "english": "car [female]",
+        "hebrew_spoken_singular": "מכונית",
+        "hebrew_letters_singular": "mechonit",
+        "hebrew_spoken_plural": "מכוניות",
+        "hebrew_letters_plural": "mechoniot"
+    },
+    {
+        "english": "tree [male]",
+        "hebrew_spoken_singular": "עץ",
+        "hebrew_letters_singular": "etz",
+        "hebrew_spoken_plural": "עצים",
+        "hebrew_letters_plural": "etzim"
+    },
+    {
+        "english": "chair [male]",
+        "hebrew_spoken_singular": "כיסא",
+        "hebrew_letters_singular": "kise",
+        "hebrew_spoken_plural": "כיסאות",
+        "hebrew_letters_plural": "kisot"
+    },
+    {
+        "english": "table [male]",
+        "hebrew_spoken_singular": "שולחן",
+        "hebrew_letters_singular": "shulchan",
+        "hebrew_spoken_plural": "שולחנות",
+        "hebrew_letters_plural": "shulchanot"
+    },
+    {
+        "english": "window [male]",
+        "hebrew_spoken_singular": "חלון",
+        "hebrew_letters_singular": "chalon",
+        "hebrew_spoken_plural": "חלונות",
+        "hebrew_letters_plural": "chalonot"
+    },
+    {
+        "english": "door [female]",
+        "hebrew_spoken_singular": "דלת",
+        "hebrew_letters_singular": "delet",
+        "hebrew_spoken_plural": "דלתות",
+        "hebrew_letters_plural": "dlatot"
+    },
+    {
+        "english": "child [male]",
+        "hebrew_spoken_singular": "ילד",
+        "hebrew_letters_singular": "yeled",
+        "hebrew_spoken_plural": "ילדים",
+        "hebrew_letters_plural": "yeladim"
+    },
+    {
+        "english": "woman [female]",
+        "hebrew_spoken_singular": "אישה",
+        "hebrew_letters_singular": "isha",
+        "hebrew_spoken_plural": "נשים",
+        "hebrew_letters_plural": "nashim"
+    },
+    {
+        "english": "man [male]",
+        "hebrew_spoken_singular": "איש",
+        "hebrew_letters_singular": "ish",
+        "hebrew_spoken_plural": "אנשים",
+        "hebrew_letters_plural": "anashim"
+    },
+    {
+        "english": "water [male]",
+        "hebrew_spoken_singular": "מים",
+        "hebrew_letters_singular": "mayim",
+        "hebrew_spoken_plural": "מים",
+        "hebrew_letters_plural": "mayim"
+    },
+    {
+        "english": "bread [male]",
+        "hebrew_spoken_singular": "לחם",
+        "hebrew_letters_singular": "lechem",
+        "hebrew_spoken_plural": "לחמים",
+        "hebrew_letters_plural": "lechamim"
+    },
+    {
+        "english": "apple [male]",
+        "hebrew_spoken_singular": "תפוח",
+        "hebrew_letters_singular": "tapuach",
+        "hebrew_spoken_plural": "תפוחים",
+        "hebrew_letters_plural": "tapuchim"
+    },
+    {
+        "english": "school [male]",
+        "hebrew_spoken_singular": "בית ספר",
+        "hebrew_letters_singular": "beit sefer",
+        "hebrew_spoken_plural": "בתי ספר",
+        "hebrew_letters_plural": "batei sefer"
+    },
+    {
+        "english": "teacher [female]",
+        "hebrew_spoken_singular": "מורה",
+        "hebrew_letters_singular": "moreh",
+        "hebrew_spoken_plural": "מורים",
+        "hebrew_letters_plural": "morim"
+    },
+    {
+        "english": "student [male]",
+        "hebrew_spoken_singular": "תלמיד",
+        "hebrew_letters_singular": "talmid",
+        "hebrew_spoken_plural": "תלמידים",
+        "hebrew_letters_plural": "talmidim"
+    },
+    {
+        "english": "city [male]",
+        "hebrew_spoken_singular": "עיר",
+        "hebrew_letters_singular": "ir",
+        "hebrew_spoken_plural": "ערים",
+        "hebrew_letters_plural": "arim"
+    },
+    {
+        "english": "street [male]",
+        "hebrew_spoken_singular": "רחוב",
+        "hebrew_letters_singular": "rechov",
+        "hebrew_spoken_plural": "רחובות",
+        "hebrew_letters_plural": "rechovot"
+    }
+]
