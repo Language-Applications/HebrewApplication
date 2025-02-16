@@ -146,13 +146,13 @@ const formatHebrewContent = (entry) => {
             <div class="hebrew-text">
                 <div class="form-group">
                     <span class="label">Singular:</span>
-                    <span class="spoken">${entry.hebrew_spoken_singular}</span>
-                    <span class="letters">(${entry.hebrew_letters_singular})</span>
+                    <span class="spoken">${entry.hebrew_letters_singular}</span>
+                    <span class="letters">(${entry.hebrew_spoken_singular})</span>
                 </div>
                 <div class="form-group">
                     <span class="label">Plural:</span>
-                    <span class="spoken">${entry.hebrew_spoken_plural}</span>
-                    <span class="letters">(${entry.hebrew_letters_plural})</span>
+                    <span class="spoken">${entry.hebrew_letters_plural}</span>
+                    <span class="letters">(${entry.hebrew_spoken_plural})</span>
                 </div>
             </div>`,
         verbs: () => `
