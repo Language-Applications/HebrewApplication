@@ -5,33 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Language Learning App</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <select id="category-select">
-            <option value="sentences">Sentences</option>
-            <option value="verbs">Verbs</option>
-            <option value="nouns">Nouns</option>
-            <option value="adjectives">Adjectives</option>
-        </select>
-        <button id="switch-direction">English → Hebrew</button>
-    </header>
+    <div class="app-container">
+        <header>
+            <div class="control-group">
+                <select id="category-select" class="glass-select">
+                    <option value="sentences">Sentences</option>
+                    <option value="verbs">Verbs</option>
+                    <option value="nouns">Nouns</option>
+                    <option value="adjectives">Adjectives</option>
+                </select>
+                <button id="switch-direction" class="direction-button">
+                    <span class="button-text">English → Hebrew</span>
+                </button>
+            </div>
+        </header>
 
-    <main>
-        <div id="english-section">
-            <p class="section-label">English</p>
-            <p id="english-text"></p>
-        </div>
-        <div id="hebrew-section">
-            <p class="section-label">Hebrew</p>
-            <div id="hebrew-content"></div>
-        </div>
-    </main>
+        <main>
+            <div class="card-container">
+                <div id="english-section" class="language-card">
+                    <span class="section-label">English</span>
+                    <div class="content-area">
+                        <p id="english-text"></p>
+                    </div>
+                </div>
+                
+                <div id="hebrew-section" class="language-card">
+                    <span class="section-label">Hebrew</span>
+                    <div class="content-area">
+                        <div id="hebrew-content"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
 
-    <footer>
-        <button id="show-continue">Show</button>
-    </footer>
-
+        <footer>
+            <button id="show-continue" class="action-button">
+                <span class="button-text">Show</span>
+            </button>
+        </footer>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

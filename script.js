@@ -1,134 +1,192 @@
-let currentCategory = "sentences";
-let data = [];
-let currentIndex = 0;
-let isRevealed = false;
-let isEnglishToHebrew = true;
+// Animation configuration
+const FADE_DURATION = 300;
 
-// Load initial category
+// Enhanced state management
+const state = {
+    currentCategory: "sentences",
+    data: [],
+    currentIndex: 0,
+    isRevealed: false,
+    isEnglishToHebrew: true
+};
+
+// Initialize animations
+const fadeIn = (element) => {
+    element.style.opacity = 0;
+    element.style.transition = `opacity ${FADE_DURATION}ms ease`;
+    setTimeout(() => element.style.opacity = 1, 50);
+};
+
+const fadeOut = (element) => {
+    element.style.opacity = 0;
+    element.style.transition = `opacity ${FADE_DURATION}ms ease`;
+};
+
+// Enhanced UI updates
+const updateUI = () => {
+    if (state.data.length === 0) return;
+
+    const entry = state.data[state.currentIndex];
+    const englishText = document.getElementById("english-text");
+    const hebrewContent = document.getElementById("hebrew-content");
+
+    fadeOut(englishText);
+    fadeOut(hebrewContent);
+
+    setTimeout(() => {
+        if (state.isEnglishToHebrew) {
+            englishText.innerText = entry.english;
+            hebrewContent.innerHTML = "";
+        } else {
+            englishText.innerText = "";
+            hebrewContent.innerHTML = formatHebrewContent(entry);
+        }
+
+        fadeIn(englishText);
+        fadeIn(hebrewContent);
+    }, FADE_DURATION);
+};
+
+// Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
-    loadData(currentCategory);
+    loadData(state.currentCategory);
+    initializeEventListeners();
 });
 
-// Handle category selection change
-document.getElementById("category-select").addEventListener("change", function() {
-    currentCategory = this.value;
-    currentIndex = 0;
-    isRevealed = false;
-    document.getElementById("show-continue").innerText = "Show";
-    loadData(currentCategory);
-});
+const initializeEventListeners = () => {
+    // Category selection
+    document.getElementById("category-select").addEventListener("change", function() {
+        state.currentCategory = this.value;
+        state.currentIndex = 0;
+        state.isRevealed = false;
+        updateButtonText("Show");
+        loadData(state.currentCategory);
+    });
 
-// Handle direction switching
-document.getElementById("switch-direction").addEventListener("click", function() {
-    isEnglishToHebrew = !isEnglishToHebrew;
-    this.innerText = isEnglishToHebrew ? "English → Hebrew" : "Hebrew → English";
-    updateUI();
-});
+    // Direction switching
+    document.getElementById("switch-direction").addEventListener("click", function() {
+        state.isEnglishToHebrew = !state.isEnglishToHebrew;
+        this.querySelector('.button-text').innerText = 
+            state.isEnglishToHebrew ? "English → Hebrew" : "Hebrew → English";
+        updateUI();
+    });
 
-// Handle "Show / Continue" button
-document.getElementById("show-continue").addEventListener("click", function() {
-    if (!isRevealed) {
-        if(isEnglishToHebrew){
-            showHebrew();
+    // Show/Continue button
+    document.getElementById("show-continue").addEventListener("click", function() {
+        if (!state.isRevealed) {
+            if(state.isEnglishToHebrew) {
+                showHebrew();
+            } else {
+                showEnglish();
+            }
+            updateButtonText("Continue");
+            state.isRevealed = true;
+        } else {
+            nextCard();
+            updateButtonText("Show");
+            state.isRevealed = false;
         }
-        else{
-            showEnglish();
-        }
-        this.innerText = "Continue";
-        isRevealed = true;
-    } else {
-        nextCard();
-        this.innerText = "Show";
-        isRevealed = false;
+    });
+};
+
+// Helper functions
+const updateButtonText = (text) => {
+    const button = document.getElementById("show-continue");
+    fadeOut(button);
+    setTimeout(() => {
+        button.querySelector('.button-text').innerText = text;
+        fadeIn(button);
+    }, FADE_DURATION);
+};
+
+const loadData = async (category) => {
+    try {
+        const response = await fetch(`input_data/${category}.json`);
+        state.data = await response.json();
+        updateUI();
+    } catch (error) {
+        console.error('Error loading data:', error);
     }
-});
+};
 
-// Load JSON data
-function loadData(category) {
-    fetch(`input_data/${category}.json`)
-        .then(response => response.json())
-        .then(jsonData => {
-            data = jsonData;
-            updateUI();
-        });
-}
+const showHebrew = () => {
+    const hebrewDiv = document.getElementById("hebrew-content");
+    const content = formatHebrewContent(state.data[state.currentIndex]);
+    fadeOut(hebrewDiv);
+    setTimeout(() => {
+        hebrewDiv.innerHTML = content;
+        fadeIn(hebrewDiv);
+    }, FADE_DURATION);
+};
 
-// // Update UI with current data
-// function updateUI() {
-//     if (data.length === 0) return;
+const showEnglish = () => {
+    const englishDiv = document.getElementById("english-text");
+    const content = state.data[state.currentIndex].english;
+    fadeOut(englishDiv);
+    setTimeout(() => {
+        englishDiv.innerHTML = content;
+        fadeIn(englishDiv);
+    }, FADE_DURATION);
+};
 
-//     let entry = data[currentIndex];
-//     document.getElementById("english-text").innerText = isEnglishToHebrew ? entry.english : getHebrewText(entry);
-//     document.getElementById("hebrew-content").innerHTML = "";
-// }
-
-function updateUI() {
-    if (data.length === 0) return;
-
-    let entry = data[currentIndex];
-    console.log("Current Entry:", entry); // Debugging log
-
-    if (isEnglishToHebrew) {
-        document.getElementById("english-text").innerText = entry.english;
-        document.getElementById("hebrew-content").innerHTML = "";
-    } else {
-        document.getElementById("english-text").innerText = ""; // Keep English box empty
-        document.getElementById("hebrew-content").innerHTML = formatHebrewContent(entry);
-    }
-}
-
-// Show Hebrew content
-function showHebrew() {
-    let entry = data[currentIndex];
-    let hebrewDiv = document.getElementById("hebrew-content");
-    hebrewDiv.innerHTML = formatHebrewContent(entry);
-}
-
-// Show Hebrew content
-function showEnglish() {
-    let entry = data[currentIndex];
-    let englishDiv = document.getElementById("english-content");
-    englishDiv.innerHTML = entry.english;
-}
-
-// Move to the next card
-function nextCard() {
-    currentIndex = (currentIndex + 1) % data.length;
+const nextCard = () => {
+    state.currentIndex = (state.currentIndex + 1) % state.data.length;
     updateUI();
-}
+};
 
-// Get Hebrew text based on category
-function getHebrewText(entry) {
-    switch (currentCategory) {
-        case "sentences":
-            return entry.hebrew_spoken;
-        case "nouns":
-            return entry.hebrew_spoken_singular;
-        case "verbs":
-            return entry.hebrew_spoken_general;
-        case "adjectives":
-            return entry.hebrew_spoken_male;
-        default:
-            return "";
-    }
-}
+// Format Hebrew content based on category
+const formatHebrewContent = (entry) => {
+    const templates = {
+        sentences: () => `
+            <div class="hebrew-text">
+                <p class="spoken">${entry.hebrew_spoken}</p>
+                <p class="letters">${entry.hebrew_letters}</p>
+            </div>`,
+        nouns: () => `
+            <div class="hebrew-text">
+                <div class="form-group">
+                    <span class="label">Singular:</span>
+                    <span class="spoken">${entry.hebrew_spoken_singular}</span>
+                    <span class="letters">(${entry.hebrew_letters_singular})</span>
+                </div>
+                <div class="form-group">
+                    <span class="label">Plural:</span>
+                    <span class="spoken">${entry.hebrew_spoken_plural}</span>
+                    <span class="letters">(${entry.hebrew_letters_plural})</span>
+                </div>
+            </div>`,
+        verbs: () => `
+            <div class="hebrew-text">
+                <div class="form-group">
+                    <span class="label">General:</span>
+                    <span class="spoken">${entry.hebrew_spoken_general}</span>
+                    <span class="letters">(${entry.hebrew_letters_general})</span>
+                </div>
+                <div class="form-group">
+                    <span class="label">He:</span>
+                    <span class="spoken">${entry.hebrew_spoken_he}</span>
+                    <span class="letters">(${entry.hebrew_letters_he})</span>
+                </div>
+                <div class="form-group">
+                    <span class="label">She:</span>
+                    <span class="spoken">${entry.hebrew_spoken_she}</span>
+                    <span class="letters">(${entry.hebrew_letters_she})</span>
+                </div>
+            </div>`,
+        adjectives: () => `
+            <div class="hebrew-text">
+                <div class="form-group">
+                    <span class="label">Male:</span>
+                    <span class="spoken">${entry.hebrew_spoken_male}</span>
+                    <span class="letters">(${entry.hebrew_letters_male})</span>
+                </div>
+                <div class="form-group">
+                    <span class="label">Female:</span>
+                    <span class="spoken">${entry.hebrew_spoken_female}</span>
+                    <span class="letters">(${entry.hebrew_letters_female})</span>
+                </div>
+            </div>`
+    };
 
-// Format Hebrew content for different categories
-function formatHebrewContent(entry) {
-    switch (currentCategory) {
-        case "sentences":
-            return `<p>${entry.hebrew_spoken}</p><p>${entry.hebrew_letters}</p>`;
-        case "nouns":
-            return `<div><strong>Singular:</strong> ${entry.hebrew_spoken_singular} (${entry.hebrew_letters_singular})</div>
-                    <div><strong>Plural:</strong> ${entry.hebrew_spoken_plural} (${entry.hebrew_letters_plural})</div>`;
-        case "verbs":
-            return `<div><strong>General:</strong> ${entry.hebrew_spoken_general} (${entry.hebrew_letters_general})</div>
-                    <div><strong>He:</strong> ${entry.hebrew_spoken_he} (${entry.hebrew_letters_he})</div>
-                    <div><strong>She:</strong> ${entry.hebrew_spoken_she} (${entry.hebrew_letters_she})</div>`;
-        case "adjectives":
-            return `<div><strong>Male:</strong> ${entry.hebrew_spoken_male} (${entry.hebrew_letters_male})</div>
-                    <div><strong>Female:</strong> ${entry.hebrew_spoken_female} (${entry.hebrew_letters_female})</div>`;
-        default:
-            return "";
-    }
-}
+    return templates[state.currentCategory]?.() || "";
+};
