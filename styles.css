@@ -1,11 +1,13 @@
 :root {
-    --color-primary: #6A728C;    /* Primary slate blue */
+    --color-primary: #816450;    /* Primary slate blue */
     --color-secondary: #D9DCBB;  /* Light sage */
     --color-tertiary: #E1DED9;   /* Light gray */
     --color-quaternary: #B6A69A; /* Taupe */
     --color-quinary: #D3A6B9;    /* Dusty rose */
     --background-color: #FFFFFF;
     --section-height: 300px;     /* Standardized section height parameter */
+    --color-orange: #C8775A;
+    --color-green: #548960;
 }
 
 body {
@@ -53,7 +55,7 @@ header {
 }
 
 .direction-button, .action-button {
-    background: var(--color-primary);
+    background: var(--color-quaternary);
     color: white;
     border: none;
     border-radius: 12px;
@@ -92,11 +94,11 @@ header {
 }
 
 #english-section {
-    background: var(--color-secondary);
+    background: var(--color-orange);
 }
 
 #hebrew-section {
-    background: var(--color-quinary);
+    background: var(--color-green);
 }
 
 .section-label {
@@ -117,9 +119,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    line-height: 1.4;
-    padding: 20px;
+    font-size: 18px;
+    line-height: 1.0;
+    padding: 0px;
     overflow-y: auto;
 }
 
