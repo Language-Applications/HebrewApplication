@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: 'Lato', sans-serif;
     margin: 0;
     padding: 0;
@@ -35,6 +35,69 @@ main {
     background-color: #FAF0CA;
     width: 80%;
     padding: 20px;
+}
+
+.section-label {
+    font-weight: bold;
+    color: gray;
+}
+
+footer button {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #E2856E;
+    border: none;
+    cursor: pointer;
+} */
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    background-color: #E2856E;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    height: 60px;
+}
+
+header select, header button {
+    font-size: 16px;
+    padding: 5px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
+}
+
+#english-section, #hebrew-section {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#english-section {
+    background-color: #C4C6E7;
+}
+
+#hebrew-section {
+    background-color: #FAF0CA;
 }
 
 .section-label {
