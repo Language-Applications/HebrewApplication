@@ -4,7 +4,7 @@
     --color-tertiary: #E1DED9;   /* Light gray */
     --color-quaternary: #B6A69A; /* Taupe */
     --color-quinary: #D3A6B9;    /* Dusty rose */
-    --background-color: #FFFFFF;
+    --background-color: #e2c4c4;
     --section-height: 300px;     /* Standardized section height parameter */
     --color-orange: #C8775A;
     --color-green: #548960;
@@ -57,7 +57,7 @@ header {
 
 .direction-button, .action-button {
     background: var(--color-quaternary);
-    color: white;
+    color: black;
     border: none;
     border-radius: 12px;
     padding: 10px 10px;
