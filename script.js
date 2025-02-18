@@ -6,8 +6,10 @@ const AUDIO_PATHS = {
 };
 
 // State Management Protocol
+// Initialize state with default chunk size of 10
 const state = {
     currentCategory: "sentences",
+    chunkSize: 10,  // Default chunk size
     data: [],
     currentIndex: 0,
     isRevealed: false,
@@ -17,7 +19,10 @@ const state = {
     remainingIndices: [],
     showingFeedback: false,
     audioContext: null,
-    audioBuffers: {}
+    audioBuffers: {},
+    currentChunkIndices: [],
+    completedChunkIndices: new Set(),
+    masterIndices: []  // Stores all indices for category reset
 };
 
 // Audio System Initialization
@@ -57,8 +62,24 @@ const shuffleArray = (array) => {
 };
 
 const initializeRandomization = () => {
-    state.randomizedIndices = shuffleArray(state.data);
-    state.remainingIndices = [...state.randomizedIndices];
+    state.masterIndices = shuffleArray([...Array(state.data.length).keys()]);
+    initializeNewChunk();
+};
+
+const initializeNewChunk = () => {
+    // Get indices for new chunk, excluding completed ones
+    const availableIndices = state.masterIndices.filter(i => !state.completedChunkIndices.has(i));
+    
+    // Reset if all chunks are completed
+    if (availableIndices.length === 0) {
+        state.completedChunkIndices.clear();
+        state.currentChunkIndices = state.masterIndices.slice(0, state.chunkSize);
+    } else {
+        // Take next chunk of available indices
+        state.currentChunkIndices = availableIndices.slice(0, state.chunkSize);
+    }
+    
+    state.remainingIndices = [...state.currentChunkIndices];
     state.currentIndex = 0;
     state.completedItems = 0;
     updateProgressDisplay();
@@ -78,7 +99,7 @@ const fadeOut = (element) => {
 
 const updateProgressDisplay = () => {
     const progressElement = document.getElementById("progress-display");
-    progressElement.innerText = `${state.completedItems + 1}/${state.data.length}`;
+    progressElement.innerText = `${state.completedItems + 1}/${state.currentChunkIndices.length}`;
 };
 
 const createFeedbackButtons = () => {
@@ -121,17 +142,19 @@ const toggleFeedbackButtons = (show) => {
 const handleCorrect = () => {
     playAudioFeedback('correct');
     
+    const currentValue = state.remainingIndices[state.currentIndex];
     state.completedItems++;
-    const previousIndex = state.remainingIndices[state.currentIndex];
     state.remainingIndices = state.remainingIndices.filter((_, index) => index !== state.currentIndex);
     
     if (state.remainingIndices.length === 0) {
-        initializeRandomization();
+        // Current chunk completed
+        state.currentChunkIndices.forEach(i => state.completedChunkIndices.add(i));
+        initializeNewChunk();
     } else {
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * state.remainingIndices.length);
-        } while (state.remainingIndices[newIndex] === previousIndex && state.remainingIndices.length > 1);
+        } while (state.remainingIndices[newIndex] === currentValue && state.remainingIndices.length > 1);
         state.currentIndex = newIndex;
     }
     
@@ -189,10 +212,37 @@ const updateUI = () => {
 document.addEventListener("DOMContentLoaded", async () => {
     await initializeAudioSystem();
     
+    // Reset category select to "sentences"
     const categorySelect = document.getElementById("category-select");
     categorySelect.value = "sentences";
     state.currentCategory = "sentences";
     
+    // Create chunk size selector
+    const header = document.querySelector('header');
+    const chunkSelect = document.createElement('select');
+    chunkSelect.id = 'chunk-select';
+    chunkSelect.className = 'glass-select';
+    
+    // Generate chunk sizes in steps of 10
+    for (let size = 10; size <= 100; size += 10) {
+        const option = document.createElement('option');
+        option.value = size;
+        option.text = `${size} words per chunk`;
+        if (size === state.chunkSize) option.selected = true;
+        chunkSelect.appendChild(option);
+    }
+
+    // Create a separate control group for chunk select
+    const chunkControlGroup = document.createElement('div');
+    chunkControlGroup.className = 'control-group';
+    chunkControlGroup.appendChild(chunkSelect);
+    
+    // Insert chunk control group between category select and direction button
+    const directionButton = document.getElementById('switch-direction');
+    const categoryControlGroup = document.querySelector('.control-group');
+    directionButton.parentNode.insertBefore(chunkControlGroup, directionButton);
+    
+    // Create progress display element
     const footerElement = document.querySelector('footer');
     const progressDisplay = document.createElement('div');
     progressDisplay.id = 'progress-display';
@@ -211,8 +261,16 @@ const initializeEventListeners = () => {
     document.getElementById("category-select").addEventListener("change", function() {
         state.currentCategory = this.value;
         state.isRevealed = false;
+        state.completedChunkIndices.clear();
         toggleFeedbackButtons(false);
         loadData(state.currentCategory);
+    });
+
+    document.getElementById("chunk-select").addEventListener("change", function() {
+        state.chunkSize = parseInt(this.value);
+        state.completedChunkIndices.clear();
+        initializeRandomization();
+        updateUI();
     });
 
     document.getElementById("switch-direction").addEventListener("click", function() {
@@ -266,7 +324,6 @@ const showEnglish = () => {
         fadeIn(englishDiv);
     }, FADE_DURATION);
 };
-
 
 // Content Formatting Protocol
 const formatHebrewContent = (entry) => {
