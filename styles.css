@@ -37,12 +37,13 @@ header {
     margin-bottom: 0px;
 }
 
+
 .control-group {
     display: flex;
     gap: 12px;
     justify-content: center;
     align-items: stretch;
-    margin-bottom: 0px; /* this was 12px */
+    margin-bottom: 0px;
 }
 
 .glass-select {
@@ -66,6 +67,33 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     flex: 1;
     min-width: 120px;
+}
+
+.feedback-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+}
+
+.direction-button, .action-button, .feedback-button {
+    background: var(--color-quaternary);
+    color: black;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.feedback-button.correct {
+    background: var(--color-green);
+}
+
+.feedback-button.mistake {
+    background: var(--color-orange);
 }
 
 .card-container {
